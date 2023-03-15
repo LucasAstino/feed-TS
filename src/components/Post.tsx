@@ -4,12 +4,25 @@ import style from './Post.module.css'
 
 import {format , formatDistanceToNow} from 'date-fns'
 import ptBr from 'date-fns/locale/pt-BR'
-import { useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
+
+interface authorProps{
+    author:{
+        name:string,
+        avatarUrl:string,
+        role:string
+    },
+
+    publishedAt: Date,
+
+    content:Array<{
+        type: string,
+        content: string,
+      }>;
+}
 
 
-
-
-export function Post({ author, publishedAt,content }){
+export function Post({ author, publishedAt,content }: authorProps){
 
      const dateFormattedTitle = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'",{locale:ptBr,}
      )
@@ -17,13 +30,13 @@ export function Post({ author, publishedAt,content }){
      const dateFormattedRelativetonow = formatDistanceToNow(publishedAt,{locale:ptBr,addSuffix:true})
 
      const [comments,setComment] = useState([
-        1,2
+        'Que bacana! Parabéns.'
             ])
 
     const [newCommentText,setNewCommentText] = useState('')
     
 
-        function handleCreateNewComment(){
+        function handleCreateNewComment(event: FormEvent){
             event.preventDefault()
 
             setComment([...comments, newCommentText])
@@ -31,7 +44,7 @@ export function Post({ author, publishedAt,content }){
             setNewCommentText('')
         }
 
-        function handleNewComment(){
+        function handleNewComment(event: ChangeEvent<HTMLTextAreaElement>){
 
             setNewCommentText(event.target.value)
            
@@ -42,7 +55,7 @@ export function Post({ author, publishedAt,content }){
         <article className={style.post}>
             <header>
         <div className={style.author}>
-            <Avatar src={author.avatarUrl} alt="avatar" />
+            <Avatar src={author.avatarUrl}  />
             <div className={style.authorInfo}>
                 <strong>{author.name}</strong>
                 <span>{author.role}</span>
