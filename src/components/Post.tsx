@@ -35,6 +35,7 @@ export function Post({ author, publishedAt, content }: authorProps) {
 
   const [newCommentText, setNewCommentText] = useState("");
 
+
   function handleCreateNewComment(event: FormEvent) {
     event.preventDefault();
 
@@ -53,6 +54,8 @@ export function Post({ author, publishedAt, content }: authorProps) {
     });
     setComment(newCommentList);
   }
+
+  
 
   return (
     <article className={style.post}>
